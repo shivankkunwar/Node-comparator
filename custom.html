@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    *{
+        background-color: #D5DEFF;
+    }
+    .comparator{
+        display: flex;
+        justify-content: space-around;
+        margin: 0 10vw;
+        
+    }
+    .node1, .node2{
+        width: 40%;
+        
+        
+    }
+    .node-container {
+      width: 100%;
+      height: 50vh;
+      float: left;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: #C4C4C4;
+      font-size: 0.8rem;
+    }
+
+  </style>
+</head>
+<body>
+    <h1>Node comparing plugin</h1>
+    <div class="comparator">
+        <div class="node1">
+            <p>Node 1</p>
+            <div id="node1" class="node-container">
+                Select first node
+            </div>
+        </div>
+        
+        <div class="node2">
+            <p>Node 2</p>
+            <div id="node2" class="node-container">
+                Select second node
+            </div>
+        </div>
+        
+    </div>
+    <!-- <button onclick="resetButton()">reset</button> -->
+  
+
+  <script>
+    // Handle messages from the plugin code
+    onmessage = (event) => {
+      const { type, node1, node2 } = event.data.pluginMessage;
+      if (type === 'comparison-result') {
+        document.getElementById('node1').innerText = node1 ? JSON.stringify(node1, null, 2) : 'Select first node';
+        document.getElementById('node2').innerText = node2 ? JSON.stringify(node2, null, 2) : 'Select second node';
+        if(node1){
+            document.getElementById('node1').style.backgroundColor="white";
+        }
+        if(node2){
+            document.getElementById('node2').style.backgroundColor="white";
+        }
+      }
+    }
+
+    // resetButton = ()=>{   //not working correctly
+    //     // Use delete operator to remove properties from objects
+    //     delete window.node1.id;
+    //     delete window.node1.name;
+    //     delete window.node1.type;
+    //     delete window.node1.visible;
+    //     delete window.node1.locked;
+    //     delete window.node1.opacity;
+    //     delete window.node1.blendMode;
+    //     delete window.node1.isMask;
+    //     delete window.node1.effects;
+
+    //     delete window.node2.id;
+    //     delete window.node2.name;
+    //     delete window.node2.type;
+    //     delete window.node2.visible;
+    //     delete window.node2.locked;
+    //     delete window.node2.opacity;
+    //     delete window.node2.blendMode;
+    //     delete window.node2.isMask;
+    //     delete window.node2.effects;
+    //     document.getElementById('node1').innerText =  'Select first node';
+    //     document.getElementById('node2').innerText = 'Select second node';
+    //     document.getElementById('node1').style.backgroundColor="#C4C4C4";
+    //     document.getElementById('node2').style.backgroundColor="#C4C4C4";
+    //     parent.postMessage({ pluginMessage: { type: 'compare-nodes' } }, '*');
+    // }
+    // Send a 'compare-nodes' message to the plugin code
+    parent.postMessage({ pluginMessage: { type: 'compare-nodes' } }, '*');
+  </script>
+</body>
+</html>
